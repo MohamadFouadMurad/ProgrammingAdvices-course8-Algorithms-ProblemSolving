@@ -10,9 +10,9 @@ int ReadYear(string message)
 	return Year;
 }
 
-bool IsLeapYear(short Year)
+bool IsLeapYear(int Year)
 {
-	return ((Year % 4 == 0 && Year % 100 != 0) || (Year % 400 == 0) ? true : false);
+	return (Year % 4 == 0 && Year % 100 != 0) || (Year % 400 == 0);
 }
 
 int main()

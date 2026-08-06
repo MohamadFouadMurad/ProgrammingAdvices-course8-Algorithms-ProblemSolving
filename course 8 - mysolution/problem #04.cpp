@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int ReadYear(string message)
+short ReadYear(string message)
 {
 	int Year = 0;
 	cout << message;
@@ -10,29 +10,29 @@ int ReadYear(string message)
 	return Year;
 }
 
-bool IsLeapYear(short Year)
+bool IsLeapYear(int Year)
 {
-	return ((Year % 4 == 0 && Year % 100 != 0) || (Year % 400 == 0) ? true : false);
+	return (Year % 4 == 0 && Year % 100 != 0) || (Year % 400 == 0);
 }
 
-int NumberOfDaysInAYear(short Year)
+int NumberOfDaysInAMonth(short Year)
 {
 	return IsLeapYear(Year) ? 366 : 365;
 }
 
-int NumberOfHoursInAYear(short Year)
+int NumberOfHoursInAMonth(short Year)
 {
-	return NumberOfDaysInAYear(Year) * 24;
+	return NumberOfDaysInAMonth(Year) * 24;
 }
 
-int NumberOfMinutesInAYear(short Year)
+int NumberOfMinutesInAMonth(short Year)
 {
-	return NumberOfHoursInAYear(Year) * 60;
+	return NumberOfHoursInAMonth(Year) * 60;
 }
 
-int NumberOfSecondsInAYear(short Year)
+int NumberOfSecondsInAMonth(short Year)
 {
-	return NumberOfMinutesInAYear(Year) * 60;
+	return NumberOfMinutesInAMonth(Year) * 60;
 }
 
 int main()
@@ -40,9 +40,9 @@ int main()
 	int Year = ReadYear("Pls enter a year to check? ");
 	cout << endl;
 
-	cout << "\nNumber of Days in Year [" << Year << "] is " << NumberOfDaysInAYear(Year);
-	cout << "\nNumber of Hours in Year [" << Year << "] is " << NumberOfHoursInAYear(Year);
-	cout << "\nNumber of Minutes in Year [" << Year << "] is " << NumberOfMinutesInAYear(Year);
-	cout << "\nNumber of Seconds in Year [" << Year << "] is " << NumberOfSecondsInAYear(Year);
+	cout << "\nNumber of Days in Year [" << Year << "] is " << NumberOfDaysInAMonth(Year);
+	cout << "\nNumber of Hours in Year [" << Year << "] is " << NumberOfHoursInAMonth(Year);
+	cout << "\nNumber of Minutes in Year [" << Year << "] is " << NumberOfMinutesInAMonth(Year);
+	cout << "\nNumber of Seconds in Year [" << Year << "] is " << NumberOfSecondsInAMonth(Year);
 
 }
