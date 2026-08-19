@@ -31,9 +31,9 @@ int NumberOfDaysInAMonth(int Year, int Month)
 
 	short arr31Days[7] = { 1,3,5,7,8,10,12 };
 
-	for (int i = 1; i <= 12; i++)
+	for (int i = 0; i < 7; i++)
 	{
-		if (arr31Days[i - 1] == Month)
+		if (arr31Days[i] == Month)
 		{
 			return 31;
 		}

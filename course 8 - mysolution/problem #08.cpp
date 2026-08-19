@@ -1,5 +1,6 @@
 #include <iostream> 
 #include <cstdio>
+#include <iomanip>
 
 using namespace std;
 
@@ -82,13 +83,13 @@ void PrintMonthCalendar(short Month, short Year)
 
 	for (int j = 1; j <= NumberOfDays; j++)
 	{
-		printf("%5d", j);
+		cout << setw(5) << j;
 
 
 		if (++current == 7)
 		{
 			current = 0;
-			printf("\n");
+			cout << "\n";
 		}
 	}
 
