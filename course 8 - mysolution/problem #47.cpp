@@ -51,9 +51,9 @@ int main()
 {
 	sDate Date = GetTodayDate();
 	
-	string NumberOfDay = DayShortName(DayOfWeekOrder(Date));
+	string NameOfTheDay = DayShortName(DayOfWeekOrder(Date));
 
-	cout << "Today is " << NumberOfDay << " , " << Date.Day << "/" << Date.Month << "/" << Date.Year;
+	cout << "Today is " << NameOfTheDay << " , " << Date.Day << "/" << Date.Month << "/" << Date.Year;
 
 	return 0;
 }

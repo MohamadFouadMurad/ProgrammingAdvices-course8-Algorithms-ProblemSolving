@@ -112,11 +112,11 @@ bool IsOverLap(stPeriods Periods1, stPeriods Periods2)
 
 bool IsDateWithinPeriod(stPeriods Period1, sDate Date1)
 {
-	if ((CompareDates(Date1,Period1.StartDate) == enCompareDate::before) || 
-	(CompareDates(Date1, Period1.EndDate) == enCompareDate::After))
+	if ((CompareDates(Date1,Period1.StartDate) == enCompareDate::before) ||
+		(CompareDates(Date1, Period1.EndDate) == enCompareDate::After))
 	{
 		return false;
-	} 
+	}
 
 	return true;
 

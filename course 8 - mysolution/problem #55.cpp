@@ -173,6 +173,8 @@ sDate CalculateVcationReturnDate(sDate DateFrom, short VcationDate)
 	{
 		DateFrom = AddOneDay(DateFrom);
 	}
+
+	return DateFrom;
 	*/
 }
 

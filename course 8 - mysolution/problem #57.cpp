@@ -72,10 +72,9 @@ enCompareDate CompareDates(sDate Date1, sDate Date2)
 	{
 		return enCompareDate::equal;
 	}
-	else
-	{
-		return enCompareDate::After;
-	}
+	
+	return enCompareDate::After;
+	
 }
 
 
