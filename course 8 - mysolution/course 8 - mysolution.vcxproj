@@ -330,6 +330,7 @@
     <ClCompile Include="problem #65.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="problem #66 - Practice .cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFunctions.h" />
