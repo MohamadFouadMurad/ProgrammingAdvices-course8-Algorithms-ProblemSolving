@@ -808,20 +808,90 @@ sDate CalculateVacationReturnDate(sDate DateFrom, int VacationDays)
 
 }
 
+bool isDate1AfterDate2(sDate Date1, sDate Date2)
+{
+	return (!IsDate1BeforeDate2(Date1, Date2) && !IsDate1EqualDate2(Date1, Date2));
+}
+
+enum enCompareDate
+{
+	After = 1, Equal = 0, Before = -1
+};
+
+short CompareDates(sDate Date1, sDate Date2)
+{
+	enCompareDate CompareDate;
+
+	if (IsDate1BeforeDate2(Date1,Date2))
+	{
+		return enCompareDate::Before;
+	}
+	else 
+	if (isDate1AfterDate2(Date1,Date2))
+	{
+		return enCompareDate::After;
+	}
+
+	return enCompareDate::Equal;
+}
+
+struct stPeriod
+{
+	sDate StartDate;
+	sDate EndDate;
+};
+
+stPeriod ReadPeriod()
+{
+	stPeriod Period;
+
+	cout << "\nEnter Start Date:\n";
+	Period.StartDate = ReadFullDate();
+	
+	cout << "\nEnter End Date:\n";
+	Period.EndDate = ReadFullDate();
+	
+	return Period;
+}
+
+bool IsOverlapPeriods(stPeriod Period1, stPeriod Period2)
+{
+	if (CompareDates(Period1.EndDate,Period2.StartDate) == enCompareDate::Before ||
+		CompareDates(Period2.EndDate,Period1.StartDate) == enCompareDate::Before)
+	{
+		return false; 
+	}
+
+	return true;
+}
+
+short PeriodLength(stPeriod Period1, bool IncludingEndDate = false)
+{
+	return GetDifferenceInDays(Period1.StartDate, Period1.EndDate, true);
+}
+
+bool IsDateWithinPeriod(stPeriod Period1, sDate Date)
+{
+	if (isDate1AfterDate2(Date,Period1.EndDate) || IsDate1BeforeDate2(Date,Period1.StartDate))
+	{
+		return false;
+	}
+
+	return true;
+}
+
 int main()
 {
-	cout << "\nVacation Start: ";
-	sDate VacationStartDate = ReadFullDate();
+	cout << "\nEnter Period 1:";
+	stPeriod Period1 = ReadPeriod();
 
-	int VacationDays = 0;
-	cout << "\nPlease enter vacaton Days?";
-	cin >> VacationDays;
+	cout << "\nEnter Date To Check:";
+	sDate Date = ReadFullDate();
 
-	sDate ReturnDate = CalculateVacationReturnDate(VacationStartDate, VacationDays);
-
-
-	cout << "\n\nReturn Date: " << DayShortName(DayOfWeekOrder(ReturnDate)) << "," << ReturnDate.Day <<
-		"/" << ReturnDate.Month << "/" << ReturnDate.Year;
+	if (IsDateWithinPeriod(Period1,Date))
+		cout << "\nYes, Date is within period\n";
+	else
+		cout << "\nNo, Date is NOT within period\n";
 
 	return 0;
 }
