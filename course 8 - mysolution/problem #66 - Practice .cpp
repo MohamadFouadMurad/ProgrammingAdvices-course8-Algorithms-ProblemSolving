@@ -880,18 +880,146 @@ bool IsDateWithinPeriod(stPeriod Period1, sDate Date)
 	return true;
 }
 
+short CountOverLap(stPeriod Period1, stPeriod Period2)
+{
+	if (!IsOverlapPeriods(Period1,Period2))
+	{
+		return 0;
+	}
+
+	sDate SDate, EDate;
+
+	if (isDate1AfterDate2(Period2.StartDate,Period1.StartDate))
+	{
+		SDate = Period2.StartDate;
+	}
+	else
+	{
+		SDate = Period1.StartDate;
+	}
+
+
+	if (IsDate1BeforeDate2(Period1.EndDate,Period2.EndDate))
+	{
+		EDate = Period1.EndDate;
+	}
+	else
+	{
+		EDate = Period2.EndDate;
+	}
+
+	return GetDifferenceInDays(SDate,EDate,true);
+}
+
+bool isDateValid(sDate Date)
+{
+	if (Date.Month > 12 || Date.Month < 1)
+	{
+		return false;
+	}
+
+	int ActualNumberOfDaysInMonth = NumberOfDaysInAMonth(Date.Month, Date.Year);
+
+	if (Date.Day > ActualNumberOfDaysInMonth || Date.Day < 1)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+vector<string> SplitString(string S1, string Delim)
+{
+	vector<string> vString;
+
+	short pos = 0;
+	string sWord; // define a string variable
+	
+	// use find() function to get the position of the delimiters
+	while ((pos = S1.find(Delim)) != std::string::npos)
+	{
+		sWord = S1.substr(0, pos); // store the word
+		if (sWord != "")
+		{
+			vString.push_back(sWord);
+		}
+		
+		S1.erase(0, pos + Delim.length());
+	
+	}
+	
+	if (S1 != "")
+	{
+		vString.push_back(S1); // it adds last word of the string.
+	}
+	
+	return vString;
+}
+
+string ReadStringDate(string Message)
+{
+	string DateString;
+
+	cout << Message;
+	getline(cin >> ws, DateString);
+	return DateString;
+}
+
+sDate StringToDate(string DateString)
+{
+	sDate Date;
+	vector <string> vDate = SplitString(DateString, "/");
+
+	Date.Day = stoi(vDate[0]);
+	Date.Month = stoi(vDate[1]);
+	Date.Year = stoi(vDate[2]);
+
+	return Date;
+}
+
+string DateToString(sDate Date)
+{
+	return to_string(Date.Day) + "/" + to_string(Date.Month) + "/" + to_string(Date.Year);
+}
+
+string ReplaceWordInString(string S1, string StringToReplace, string sRepalceTo)
+{
+	short pos = S1.find(StringToReplace);
+	
+	while (pos != std::string::npos)
+	{
+		S1 = S1.replace(pos, StringToReplace.length(),sRepalceTo);
+		
+		pos = S1.find(StringToReplace);//find next
+	}
+	
+	return S1;
+}
+
+string FormateDate(sDate Date, string DateFormat = "dd/mm/yyyy")
+{
+	string FormtedDate = DateFormat;
+
+	FormtedDate = ReplaceWordInString(DateFormat, "dd", to_string(Date.Day));
+	FormtedDate = ReplaceWordInString(FormtedDate, "mm", to_string(Date.Month));
+	FormtedDate = ReplaceWordInString(FormtedDate, "yyyy", to_string(Date.Year));
+
+	return FormtedDate;
+}
+
 int main()
 {
-	cout << "\nEnter Period 1:";
-	stPeriod Period1 = ReadPeriod();
+	
+	string DateString = ReadStringDate("\nPlease Enter Date dd / mm / yyyy ? ");
 
-	cout << "\nEnter Date To Check:";
-	sDate Date = ReadFullDate();
-
-	if (IsDateWithinPeriod(Period1,Date))
-		cout << "\nYes, Date is within period\n";
-	else
-		cout << "\nNo, Date is NOT within period\n";
+	sDate Date = StringToDate(DateString);
+	
+	cout << "\n" << FormateDate(Date) << "\n";
+	cout << "\n" << FormateDate(Date, "yyyy/dd/mm") << "\n";
+	cout << "\n" << FormateDate(Date, "mm/dd/yyyy") << "\n";
+	cout << "\n" << FormateDate(Date, "mm-dd-yyyy") << "\n";
+	cout << "\n" << FormateDate(Date, "dd-mm-yyyy") << "\n";
+	cout << "\n" << FormateDate(Date, "Day:dd, Month:mm,Year:yyyy") << "\n";
 
 	return 0;
 }
